@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/adarsh2858/graphql-joblisting-mongo/dao"
 	"github.com/adarsh2858/graphql-joblisting-mongo/graph/model"
 )
 
@@ -32,8 +33,12 @@ func (r *queryResolver) Jobs(ctx context.Context) ([]*model.JobListing, error) {
 	jobListing := &model.JobListing{
 		Title: "hello world",
 	}
+
+	jobsInDb := dao.GetJobListings()
+
 	var jobs []*model.JobListing
 	jobs = append(jobs, jobListing)
+	jobs = append(jobs, jobsInDb...)
 
 	return jobs, nil
 }
